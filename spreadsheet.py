@@ -1,5 +1,3 @@
-# from __future__ import print_function
-from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 import pandas as pd
@@ -8,38 +6,51 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pprint import pprint
 
+from sys import platform as sys_pf
+if sys_pf == 'darwin':
+    import matplotlib
+    matplotlib.use("TkAgg")
+import matplotlib.pyplot as plt
+
 from constants import (
-    FCN_SPREADSHEET_ID, FCN_SHEET_NAME
+    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME, SCOPE
 )
 
 
-scope = [
-    # 'https://www.googleapis.com/auth/spreadsheets', 
-    'https://www.googleapis.com/auth/drive']
-credentials = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-client = gspread.authorize(credentials)
+def get_google_sheet(workbook_name):
+    """ 
+    Returns all records of first sheet of workbook in the form of a 
+    list of dictionaries 
+    """
 
-sheet = client.open('FCN_Order_Tampa').sheet1
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(
+        CLIENT_SECRET_FILENAME, SCOPE
+        )
+    client = gspread.authorize(credentials)
 
-# data = sheet.row_values(54)
-data = sheet.get_all_records()
-print(type(data))
-# pprint(data)
+    sheet = client.open(workbook_name).sheet1
+    data = sheet.get_all_records()
+    return data
 
-# def get_google_sheet(spreadsheet_id, sheet_name):
-#     """ Retrieve sheet data using OAuth credentials and Google Python API. """
-#     scopes = 'https://www.googleapis.com/auth/spreadsheets.readonly'
-#     store = file.Storage('credentials.json')
-#     credentials = store.get()
-#     if not credentials or credentials.invalid:
-#         flow = client.flow_from_clientsecrets('client_secret.json', scopes)
-#         credentials = tools.run_flow(flow, store)
-#     service = build('sheets', 'v4', http=credentials.authorize(Http()))
-#     gsheet = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=sheet_name).execute()
-#     return gsheet
+def get_data_frame_from_google_sheet(workbook_name):
+    data_list = get_google_sheet(workbook_name)
+    data = pd.DataFrame(data_list)
+    return data
 
-
+def plot_data(data):
+    """ Plot DataFrame """
+    plt.plot(data['Week'], data['Total'])
+    plt.show()
 
 
-# if __name__ == '__main__':
-#     get_google_sheet(FCN_SPREADSHEET_ID, FCN_SHEET_NAME)
+def clean_data(data):
+    """ Cleans a list of dictionaries so it has the right data types """
+
+
+
+
+if __name__ == '__main__':
+    data = get_data_frame_from_google_sheet(FCN_WORKBOOK_NAME)
+    # plot_data(data)
+    for col in data.columns:
+        print(data[col].dtype)
