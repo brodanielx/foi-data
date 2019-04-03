@@ -9,3 +9,7 @@
     - Get date needed for report
 2. Compile email
 3. Send email
+
+## ToDo
+- handle dates properly in data frame
+- save graphs to a folder

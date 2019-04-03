@@ -35,22 +35,32 @@ def get_google_sheet(workbook_name):
 def get_data_frame_from_google_sheet(workbook_name):
     data_list = get_google_sheet(workbook_name)
     data = pd.DataFrame(data_list)
+    data = clean_data(data)
     return data
 
-def plot_data(data):
-    """ Plot DataFrame """
-    plt.plot(data['Week'], data['Total'])
-    plt.show()
-
-
 def clean_data(data):
-    """ Cleans a list of dictionaries so it has the right data types """
+    data = data.replace(r'', 0)
+    return data
 
+
+def plot_data(data):
+    for col in data.columns:
+        plot_column(data, col)
+
+def plot_column(data, column='Tampa'):
+    """ Plot DataFrame """
+    plt.plot(data['Week'], data[column])
+
+    plt.title(f'{column} FCN')
+    plt.xlabel('Week')
+    plt.ylabel('FCN')
+
+    plt.show()
 
 
 
 if __name__ == '__main__':
     data = get_data_frame_from_google_sheet(FCN_WORKBOOK_NAME)
+    # pprint(data, indent=2)
     # plot_data(data)
-    for col in data.columns:
-        print(data[col].dtype)
+    plot_column(data)
