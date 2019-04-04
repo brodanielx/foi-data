@@ -1,6 +1,8 @@
 from httplib2 import Http
 from oauth2client import file, client, tools
 import pandas as pd
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -35,11 +37,11 @@ def get_google_sheet(workbook_name):
 def get_data_frame_from_google_sheet(workbook_name):
     data_list = get_google_sheet(workbook_name)
     data = pd.DataFrame(data_list)
-    data = clean_data(data)
-    return data
+    return clean_data(data)
 
 def clean_data(data):
     data = data.replace(r'', 0)
+    data['Week'] = pd.to_datetime(data.Week)
     return data
 
 
@@ -52,7 +54,7 @@ def plot_column(data, column='Tampa'):
     plt.plot(data['Week'], data[column])
 
     plt.title(f'{column} FCN')
-    plt.xlabel('Week')
+    plt.xlabel('Date')
     plt.ylabel('FCN')
 
     plt.show()
