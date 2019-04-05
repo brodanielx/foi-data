@@ -13,6 +13,7 @@ if sys_pf == 'darwin':
     import matplotlib
     matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 from constants import (
     CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME, SCOPE
@@ -37,11 +38,12 @@ def get_google_sheet(workbook_name):
 def get_data_frame_from_google_sheet(workbook_name):
     data_list = get_google_sheet(workbook_name)
     data = pd.DataFrame(data_list)
+    data.set_index('Week', inplace=True)
     return clean_data(data)
 
 def clean_data(data):
     data = data.replace(r'', 0)
-    data['Week'] = pd.to_datetime(data.Week)
+    data.index = pd.to_datetime(data.index)
     return data
 
 
@@ -49,20 +51,29 @@ def plot_data(data):
     for col in data.columns:
         plot_column(data, col)
 
-def plot_column(data, column='Tampa'):
+def plot_column(data, column='Tampa', workbook_name=''):
     """ Plot DataFrame """
-    plt.plot(data['Week'], data[column])
+    fig = plt.figure(figsize=(15,8))
+    ax = fig.add_subplot(111)
+    ax.plot(data.index, data[column])
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))
 
     plt.title(f'{column} FCN')
     plt.xlabel('Date')
     plt.ylabel('FCN')
+    # plt.style.use('seaborn-deep')
 
-    plt.show()
+    # plt.show()
+    plt.savefig(f'{column}_{workbook_name}.png', bbox_inches='tight')
+
+
+def get_plots_from_workbook(workbook_name):
+    data = get_data_frame_from_google_sheet(workbook_name)
+    # pprint(data.head())
+    # plot_data(data)
+    plot_column(data, 'Tampa', workbook_name)
 
 
 
 if __name__ == '__main__':
-    data = get_data_frame_from_google_sheet(FCN_WORKBOOK_NAME)
-    # pprint(data, indent=2)
-    # plot_data(data)
-    plot_column(data)
+    get_plots_from_workbook(FCN_WORKBOOK_NAME)
