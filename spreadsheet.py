@@ -16,7 +16,8 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 from constants import (
-    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME, SCOPE
+    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME, NUMBER_OF_SQUADS, 
+    SCOPE
 )
 
 
@@ -31,8 +32,12 @@ def get_google_sheet(workbook_name):
         )
     client = gspread.authorize(credentials)
 
-    sheet = client.open(workbook_name).sheet1
+    # sheet = client.open(workbook_name).sheet1
+    sheet = client.open(workbook_name).get_worksheet(2)
     data = sheet.get_all_records()
+    sheet_title = sheet.title
+    print(sheet_title)
+
     return data
 
 def get_data_frame_from_google_sheet(workbook_name):
@@ -51,7 +56,7 @@ def plot_data(data):
     for col in data.columns:
         plot_column(data, col)
 
-def plot_column(data, column='Tampa', workbook_name=''):
+def plot_column(data, column='Total', workbook_name=''):
     """ Plot DataFrame """
     fig = plt.figure(figsize=(15,8))
     ax = fig.add_subplot(111)
@@ -63,15 +68,15 @@ def plot_column(data, column='Tampa', workbook_name=''):
     plt.ylabel('FCN')
     # plt.style.use('seaborn-deep')
 
-    # plt.show()
-    plt.savefig(f'{column}_{workbook_name}.png', bbox_inches='tight')
+    plt.show()
+    # plt.savefig(f'{column}_{workbook_name}.png', bbox_inches='tight')
 
 
 def get_plots_from_workbook(workbook_name):
     data = get_data_frame_from_google_sheet(workbook_name)
     # pprint(data.head())
     # plot_data(data)
-    plot_column(data, 'Tampa', workbook_name)
+    plot_column(data, 'Total', workbook_name)
 
 
 
