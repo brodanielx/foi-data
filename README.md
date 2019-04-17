@@ -28,10 +28,14 @@
 
 
 
-get_google_workbook()
-    - returns list of dictionaries
-    - each dictionary
-        - {
-            'sheet_title': sheet_title,
-            'data': [list]
-        }
+workbooks = [workbook1, workbook2,...] => list of dictionaries
+workbook1 = {
+    'category' : 'category',
+    'data' : workbook_data
+}
+workbook_data = [sheet1, sheet2,...] => list of dictionaries
+sheet1 = {
+    'sheet_title' : sheet_title,
+    'data' : data
+}
+data = dataframe

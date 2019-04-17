@@ -135,4 +135,6 @@ def get_plots_from_workbook(workbook_name):
 
 if __name__ == '__main__':
     # get_plots_from_workbook(FCN_WORKBOOK_NAME)
-    pprint(get_google_workbooks(WORKBOOK_NAME_DICTIONARIES)[0]['data'], indent=2)
+    workbooks = get_google_workbooks(WORKBOOK_NAME_DICTIONARIES)
+    print(len(workbooks))
+    # pprint(workbooks[0]['data'], indent=2)
