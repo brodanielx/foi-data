@@ -28,7 +28,7 @@
 
 
 
-get_google_sheet() => get_google_workbook()
+get_google_workbook()
     - returns list of dictionaries
     - each dictionary
         - {
