@@ -27,15 +27,5 @@
 - get plots for FCN, Dues, Attendance
 
 
-
-workbooks = [workbook1, workbook2,...] => list of dictionaries
-workbook1 = {
-    'category' : 'category',
-    'data' : workbook_data
-}
-workbook_data = [sheet1, sheet2,...] => list of dictionaries
-sheet1 = {
-    'sheet_title' : sheet_title,
-    'data' : data
-}
-data = dataframe
+get_national_security_str()
+    - divide all values by 2 in data frame
