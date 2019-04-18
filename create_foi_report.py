@@ -1,6 +1,9 @@
 from pprint import pprint
 
 from constants import (
+    DUES_CATEGORY,
+    FCN_CATEGORY,
+    FOI_CLASS_ATTENDANCE_CATEGORY,
     WORKBOOK_NAME_DICTIONARIES
 )
 from spreadsheet import (
@@ -9,19 +12,24 @@ from spreadsheet import (
 
 def create_foi_report():
     workbooks = get_google_workbooks(WORKBOOK_NAME_DICTIONARIES)
-    fcn_str = get_fcn_str(workbooks)
-    print(fcn_str)
+    dues_str = get_workbook_values_str(workbooks, DUES_CATEGORY)
+    fcn_str = get_workbook_values_str(workbooks, FCN_CATEGORY)
+    foi_class_attendance_str = get_workbook_values_str(
+        workbooks, FOI_CLASS_ATTENDANCE_CATEGORY
+    )
+
+    values_str = f'{dues_str}\n{fcn_str}\n{foi_class_attendance_str}\n'
+
+    print(values_str)
 
 
-def get_fcn_str(workbooks):
-    fcn_workbook = next((item for item in workbooks if item['category'] == 'FCN'), None)
-    fcn_data = fcn_workbook['data']
+def get_workbook_values_str(workbooks, category):
+    workbook = next((item for item in workbooks if item['category'] == category), None)
+    
+    workbook_data = workbook['data']
 
-    values_str = 'FCN\n'
+    values_str = f'{category}\n'
 
-    return get_workbook_values_str(fcn_data, values_str)
-
-def get_workbook_values_str(workbook_data, values_str):
     for sheet in workbook_data:
         sheet_title = sheet['sheet_title']
         if 'Total' not in sheet_title:
@@ -43,6 +51,13 @@ def get_sheet_values_str(data_frame):
             sheet_values_str += value_str
 
     return sheet_values_str
+
+def handle_dues_data(workbook):
+    if workbook['category'] == DUES_CATEGORY:
+        workbook_data = workbook['data']
+        # for sheet in workbook_data:
+
+
 
 
 
