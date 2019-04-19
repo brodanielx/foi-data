@@ -12,8 +12,6 @@
 
 ## ToDo
 - create new gmail account for sending automated emails
-    - must allow less secure apps at https://myaccount.google.com/lesssecureapps
-    - noreply.foitampa@gmail.com
 
 
 ## ToDo
