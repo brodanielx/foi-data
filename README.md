@@ -11,9 +11,9 @@
 3. Send email
 
 ## ToDo
-- send weekly FOI report to SRK
-    - create report
-        - get data from all (3) google sheets
+- create new gmail account for sending automated emails
+    - must allow less secure apps at https://myaccount.google.com/lesssecureapps
+    - noreply.foitampa@gmail.com
 
 
 ## ToDo
@@ -25,7 +25,3 @@
     - lineplots.py
     - barplots.py
 - get plots for FCN, Dues, Attendance
-
-
-get_national_security_str()
-    - divide all values by 2 in data frame

@@ -1,5 +1,6 @@
 *.json
 constants.py
+srk_report_constants.py
 
 
 # Byte-compiled / optimized / DLL files
