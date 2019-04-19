@@ -11,7 +11,7 @@
 3. Send email
 
 ## ToDo
-- create new gmail account for sending automated emails
+- send email to multiple addresses
 
 
 ## ToDo
