@@ -14,7 +14,9 @@ from srk_report_constants import (
     FOI_AUTOMATE_EMAIL_ADDRESS, 
     FOI_AUTOMATE_EMAIL_PASSWORD,
     FOI_EMAIL_ADDRESS,
-    FOOTER_MESSAGE, GREETINGS, SUBJECT,
+    FOOTER_MESSAGE, GREETINGS, 
+    RECIPIENT_EMAIL_ADDRESSES,
+    SUBJECT,
     SMTP_PORT, SMTP_SERVER
 )
 
@@ -48,7 +50,7 @@ def create_report():
 
 def send_report(full_email_str):
     conn = get_smtp_connection()
-    conn.sendmail(FOI_AUTOMATE_EMAIL_ADDRESS, FOI_EMAIL_ADDRESS, full_email_str)
+    conn.sendmail(FOI_AUTOMATE_EMAIL_ADDRESS, RECIPIENT_EMAIL_ADDRESSES, full_email_str)
 
 
 def get_smtp_connection():
