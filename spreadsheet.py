@@ -16,7 +16,9 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 from constants import (
-    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME, NUMBER_OF_SHEETS_PER_WORKBOOK,
+    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME,
+    FOI_CLASS_ATTENDANCE_WORKBOOK_NAME, 
+    NUMBER_OF_SHEETS_PER_WORKBOOK,
     NUMBER_OF_SQUADS, SCOPE,
     WORKBOOK_NAME_DICTIONARIES
 )
@@ -70,6 +72,10 @@ def to_data_frame(data_list):
     data = pd.DataFrame(data_list)
     data.set_index('Week', inplace=True)
     return clean_data(data)
+
+def clean_workbook_data(data, workbook_title):
+    if workbook_title == FOI_CLASS_ATTENDANCE_WORKBOOK_NAME:
+        return data 
 
 
 
