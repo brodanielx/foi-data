@@ -34,12 +34,18 @@ def create_graphs():
             sheet_title = sheet['sheet_title']
             sheet_data = sheet['data']
 
-            if sheet_title == 'Total':
-                # graph total line
-                plot_column(sheet_data, 'Total', workbook_category)
+            # if sheet_title == 'Total':
+            #     # graph total line
+            #     plot_column_line(sheet_data, 'Total', workbook_category)
+            # else:
+            #     for col in sheet_data.columns:
+            #         if col != 'Total':
+            #             plot_column_line(sheet_data, col, workbook_category)
+
+            plot_bar(sheet_data, workbook_category)
 
 
-def plot_column(data, column, workbook_category):
+def plot_column_line(data, column, workbook_category):
     """ Plot DataFrame """
     fig = plt.figure(figsize=(15,8))
     ax = fig.add_subplot(111)
@@ -53,6 +59,13 @@ def plot_column(data, column, workbook_category):
 
     plt.show()
     # plt.savefig(f'{column}_{workbook_category}.png', bbox_inches='tight')
+
+
+def plot_bar(data, workbook_category):
+    data = data.drop(columns=['Total'])
+    row = data.iloc[-1]
+    row.plot(kind='bar')
+    plt.show()
 
 
 

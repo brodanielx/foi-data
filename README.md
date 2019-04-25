@@ -6,13 +6,13 @@
         - Total
         - Individual
     - Bar
-        - last week of every tab
+        - last week of every tab - except total column
 - Dues
     - Line (52 weeks)
         - Total
         - Individual
     - Bar
-        - last week of every tab
+        - last week of every tab - except total column
 - FOI Class Attendance
     - Line (52 weeks)
         - Total

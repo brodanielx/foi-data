@@ -48,6 +48,7 @@ def get_google_workbook(workbook_name):
         sheet = client.open(workbook_name).get_worksheet(i)
         data_list = sheet.get_all_records()
         data = to_data_frame(data_list)
+        data = clean_workbook_data(data, workbook_name)
         sheet_title = sheet.title
 
         sheet_dictionary = {
@@ -75,7 +76,8 @@ def to_data_frame(data_list):
 
 def clean_workbook_data(data, workbook_title):
     if workbook_title == FOI_CLASS_ATTENDANCE_WORKBOOK_NAME:
-        return data 
+        return data.loc[data.index.dayofweek == 0]
+    return data
 
 
 
