@@ -9,8 +9,11 @@ if sys_pf == 'darwin':
     matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.style as style
+matplotlib.rcParams['font.family'] = "sans-serif"
 
 from constants import (
+    DATE_FORMAT,
     DUES_CATEGORY,
     FCN_CATEGORY,
     FOI_CLASS_ATTENDANCE_CATEGORY,
@@ -42,7 +45,8 @@ def create_graphs():
             #         if col != 'Total':
             #             plot_column_line(sheet_data, col, workbook_category)
 
-            plot_bar(sheet_data, workbook_category)
+            if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
+                plot_bar(sheet_data, sheet_title, workbook_category)
 
 
 def plot_column_line(data, column, workbook_category):
@@ -61,11 +65,31 @@ def plot_column_line(data, column, workbook_category):
     # plt.savefig(f'{column}_{workbook_category}.png', bbox_inches='tight')
 
 
-def plot_bar(data, workbook_category):
+def plot_bar(data, sheet_title, workbook_category):
     data = data.drop(columns=['Total'])
     row = data.iloc[-1]
-    row.plot(kind='bar')
-    plt.show()
+    date = get_date(data)
+
+    fig = plt.figure(figsize=(15,8))
+    ax = fig.add_subplot(111)
+
+    style.use('ggplot')
+
+    row.plot(kind='bar', width=.3)
+
+    plt.title(f'{workbook_category} {date}')
+    plt.xticks(rotation=0)
+
+    plt.savefig(f'{sheet_title}_{workbook_category}_bar.png', bbox_inches='tight')
+    # plt.show()
+
+def get_date(data_frame):
+    data_tail = data_frame.tail(1)
+    date = data_tail.index.values[0]
+    timestamp = pd.to_datetime(str(date))
+    date_str = timestamp.strftime(DATE_FORMAT)
+    return date_str
+
 
 
 

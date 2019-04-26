@@ -3,6 +3,7 @@ from pprint import pprint
 import smtplib
 
 from constants import (
+    DATE_FORMAT,
     DUES_CATEGORY,
     FCN_CATEGORY,
     FOI_CLASS_ATTENDANCE_CATEGORY,
@@ -10,7 +11,6 @@ from constants import (
 )
 
 from srk_report_constants import (
-    DATE_FORMAT,
     FOI_AUTOMATE_EMAIL_ADDRESS, 
     FOI_AUTOMATE_EMAIL_PASSWORD,
     FOI_EMAIL_ADDRESS,
