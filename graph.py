@@ -45,8 +45,8 @@ def create_graphs():
             #         if col != 'Total':
             #             plot_column_line(sheet_data, col, workbook_category)
 
-            # if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
-            #     plot_bar(sheet_data, sheet_title, workbook_category)
+            if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
+                plot_bar(sheet_data, sheet_title, workbook_category)
 
 
 def plot_column_line(data, column, workbook_category):
