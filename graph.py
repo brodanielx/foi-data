@@ -10,7 +10,7 @@ if sys_pf == 'darwin':
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.style as style
-matplotlib.rcParams['font.family'] = "sans-serif"
+# matplotlib.rcParams['font.family'] = "sans-serif"
 
 from constants import (
     DATE_FORMAT,
@@ -37,20 +37,21 @@ def create_graphs():
             sheet_title = sheet['sheet_title']
             sheet_data = sheet['data']
 
-            # if sheet_title == 'Total':
-            #     # graph total line
-            #     plot_column_line(sheet_data, 'Total', workbook_category)
+            if sheet_title == 'Total':
+                # graph total line
+                plot_column_line(sheet_data, 'Total', workbook_category)
             # else:
             #     for col in sheet_data.columns:
             #         if col != 'Total':
             #             plot_column_line(sheet_data, col, workbook_category)
 
-            if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
-                plot_bar(sheet_data, sheet_title, workbook_category)
+            # if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
+            #     plot_bar(sheet_data, sheet_title, workbook_category)
 
 
 def plot_column_line(data, column, workbook_category):
     """ Plot DataFrame """
+    style.use('ggplot')
     fig = plt.figure(figsize=(15,8))
     ax = fig.add_subplot(111)
     ax.plot(data.index, data[column])
@@ -59,10 +60,9 @@ def plot_column_line(data, column, workbook_category):
     plt.title(f'{column} {workbook_category}')
     plt.xlabel('Date')
     plt.ylabel(f'{workbook_category}')
-    # plt.style.use('seaborn-deep')
 
-    plt.show()
-    # plt.savefig(f'{column}_{workbook_category}.png', bbox_inches='tight')
+    # plt.show()
+    plt.savefig(f'{column}_{workbook_category}.png', bbox_inches='tight')
 
 
 def plot_bar(data, sheet_title, workbook_category):

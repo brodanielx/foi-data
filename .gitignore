@@ -1,4 +1,5 @@
 *.json
+*.png
 constants.py
 srk_report_constants.py
 
