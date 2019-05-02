@@ -77,7 +77,7 @@ def plot_bar(data, sheet_title, workbook_category):
 
     row.plot(kind='bar', width=.3)
 
-    plt.title(f'{workbook_category} {date}')
+    plt.title(f'{sheet_title} {workbook_category} {date}')
     plt.xticks(rotation=0)
 
     plt.savefig(f'{sheet_title}_{workbook_category}_bar.png', bbox_inches='tight')
