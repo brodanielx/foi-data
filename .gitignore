@@ -3,6 +3,8 @@
 constants.py
 srk_report_constants.py
 
+graphs/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

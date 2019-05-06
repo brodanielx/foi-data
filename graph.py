@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
@@ -10,7 +11,6 @@ if sys_pf == 'darwin':
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.style as style
-# matplotlib.rcParams['font.family'] = "sans-serif"
 
 from constants import (
     DATE_FORMAT,
@@ -38,12 +38,11 @@ def create_graphs():
             sheet_data = sheet['data']
 
             if sheet_title == 'Total':
-                # graph total line
                 plot_column_line(sheet_data, 'Total', workbook_category)
-            # else:
-            #     for col in sheet_data.columns:
-            #         if col != 'Total':
-            #             plot_column_line(sheet_data, col, workbook_category)
+            else:
+                for col in sheet_data.columns:
+                    if col != 'Total':
+                        plot_column_line(sheet_data, col, workbook_category)
 
             if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
                 plot_bar(sheet_data, sheet_title, workbook_category)
@@ -61,8 +60,11 @@ def plot_column_line(data, column, workbook_category):
     plt.xlabel('Date')
     plt.ylabel(f'{workbook_category}')
 
-    # plt.show()
-    plt.savefig(f'{column}_{workbook_category}.png', bbox_inches='tight')
+    folder_path = get_graph_file_path()
+    file_name = f'{column}_{workbook_category}_line.png'
+    full_path = os.path.join(folder_path, file_name)
+    plt.savefig(f'{column}_{workbook_category}_line.png', bbox_inches='tight')
+    plt.close()
 
 
 def plot_bar(data, sheet_title, workbook_category):
@@ -80,8 +82,12 @@ def plot_bar(data, sheet_title, workbook_category):
     plt.title(f'{sheet_title} {workbook_category} {date}')
     plt.xticks(rotation=0)
 
+    folder_path = get_graph_file_path()
+    file_name = f'{sheet_title}_{workbook_category}_bar.png'
+    full_path = os.path.join(folder_path, file_name)
+
     plt.savefig(f'{sheet_title}_{workbook_category}_bar.png', bbox_inches='tight')
-    # plt.show()
+    plt.close()
 
 def get_date(data_frame):
     data_tail = data_frame.tail(1)
@@ -89,6 +95,10 @@ def get_date(data_frame):
     timestamp = pd.to_datetime(str(date))
     date_str = timestamp.strftime(DATE_FORMAT)
     return date_str
+
+def get_graph_file_path():
+    cwd = os.getcwd()
+    return os.path.join(cwd, 'graphs')
 
 
 
