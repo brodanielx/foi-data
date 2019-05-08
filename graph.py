@@ -30,27 +30,35 @@ def create_graphs():
     workbooks = get_google_workbooks(WORKBOOK_NAME_DICTIONARIES)
 
     for workbook in workbooks:
-        workbook_category = workbook['category']
-        workbook_data = workbook['data']
+        create_graphs_for_workbook(workbook)
+        
 
-        for sheet in workbook_data:
-            sheet_title = sheet['sheet_title']
-            sheet_data = sheet['data']
+def create_graphs_for_workbook(workbook):
+    workbook_category = workbook['category']
+    workbook_data = workbook['data']
 
-            if sheet_title == 'Total':
-                plot_column_line(sheet_data, 'Total', workbook_category)
-            else:
-                for col in sheet_data.columns:
-                    if col != 'Total':
-                        plot_column_line(sheet_data, col, workbook_category)
+    for sheet in workbook_data:
+        create_graphs_for_sheet(sheet, workbook_category)
 
-            if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
-                plot_bar(sheet_data, sheet_title, workbook_category)
+
+def create_graphs_for_sheet(sheet, workbook_category):
+    sheet_title = sheet['sheet_title']
+    sheet_data = sheet['data']
+
+    if sheet_title == 'Total':
+        plot_column_line(sheet_data, 'Total', workbook_category)
+    else:
+        for col in sheet_data.columns:
+            if col != 'Total':
+                plot_column_line(sheet_data, col, workbook_category)
+
+    if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
+        plot_bar(sheet_data, sheet_title, workbook_category)
 
 
 def plot_column_line(data, column, workbook_category):
-    """ Plot DataFrame """
     style.use('ggplot')
+
     fig = plt.figure(figsize=(15,8))
     ax = fig.add_subplot(111)
     ax.plot(data.index, data[column])
@@ -60,11 +68,11 @@ def plot_column_line(data, column, workbook_category):
     plt.xlabel('Date')
     plt.ylabel(f'{workbook_category}')
 
-    folder_path = get_graph_file_path()
     file_name = f'{column}_{workbook_category}_line.png'
-    full_path = os.path.join(folder_path, file_name)
-    plt.savefig(f'{column}_{workbook_category}_line.png', bbox_inches='tight')
-    plt.close()
+    full_path = get_file_path(workbook_category, file_name)
+
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close(fig)
 
 
 def plot_bar(data, sheet_title, workbook_category):
@@ -76,18 +84,16 @@ def plot_bar(data, sheet_title, workbook_category):
     ax = fig.add_subplot(111)
 
     style.use('ggplot')
-
     row.plot(kind='bar', width=.3)
-
     plt.title(f'{sheet_title} {workbook_category} {date}')
     plt.xticks(rotation=0)
 
-    folder_path = get_graph_file_path()
     file_name = f'{sheet_title}_{workbook_category}_bar.png'
-    full_path = os.path.join(folder_path, file_name)
+    full_path = get_file_path(workbook_category, file_name)
 
-    plt.savefig(f'{sheet_title}_{workbook_category}_bar.png', bbox_inches='tight')
-    plt.close()
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close(fig)
+    
 
 def get_date(data_frame):
     data_tail = data_frame.tail(1)
@@ -96,9 +102,14 @@ def get_date(data_frame):
     date_str = timestamp.strftime(DATE_FORMAT)
     return date_str
 
-def get_graph_file_path():
+def get_file_path(sub_folder, file_name):
+    folder_path = get_folder_path(sub_folder)
+    return os.path.join(folder_path, file_name)
+
+def get_folder_path(sub_folder):
     cwd = os.getcwd()
-    return os.path.join(cwd, 'graphs')
+    sub_folder_path = os.path.join('graphs', sub_folder)
+    return os.path.join(cwd, sub_folder_path)
 
 
 
