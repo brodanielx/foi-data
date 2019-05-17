@@ -47,10 +47,10 @@ def create_graphs_for_sheet(sheet, workbook_category):
 
     if sheet_title == 'Total':
         plot_column_line(sheet_data, 'Total', workbook_category)
-    else:
-        for col in sheet_data.columns:
-            if col != 'Total':
-                plot_column_line(sheet_data, col, workbook_category)
+    # else:
+    #     for col in sheet_data.columns:
+    #         if col != 'Total':
+    #             plot_column_line(sheet_data, col, workbook_category)
 
     if workbook_category != FOI_CLASS_ATTENDANCE_CATEGORY: 
         plot_bar(sheet_data, sheet_title, workbook_category)
@@ -93,7 +93,7 @@ def plot_bar(data, sheet_title, workbook_category):
 
     plt.savefig(full_path, bbox_inches='tight')
     plt.close(fig)
-    
+
 
 def get_date(data_frame):
     data_tail = data_frame.tail(1)
