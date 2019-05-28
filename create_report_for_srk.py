@@ -5,17 +5,20 @@ import smtplib
 from constants import (
     DATE_FORMAT,
     DUES_CATEGORY,
+    DUES_DISPLAY_TITLE,
     FCN_CATEGORY,
     FOI_CLASS_ATTENDANCE_CATEGORY,
     WORKBOOK_NAME_DICTIONARIES
 )
 
 from srk_report_constants import (
+    COLUMNS_TO_EXCLUDE,
     FOI_AUTOMATE_EMAIL_ADDRESS, 
     FOI_AUTOMATE_EMAIL_PASSWORD,
     FOI_EMAIL_ADDRESS,
     FOOTER_MESSAGE, GREETINGS, 
     RECIPIENT_EMAIL_ADDRESSES,
+    SHEET_TITLES_TO_EXCLUDE,
     SUBJECT,
     SMTP_PORT, SMTP_SERVER
 )
@@ -84,7 +87,7 @@ def get_workbook_values_str(workbooks, category):
 
     for sheet in workbook_data:
         sheet_title = sheet['sheet_title']
-        if 'Total' not in sheet_title:
+        if sheet_title not in SHEET_TITLES_TO_EXCLUDE:
             data = sheet['data']
             data_tail = data.tail(1)
             sheet_values_str = get_sheet_values_str(data_tail)
@@ -97,7 +100,7 @@ def get_sheet_values_str(data_frame):
     series = data_frame.iloc[0]
 
     for col in data_frame.columns:
-        if 'Total' not in col:
+        if col not in COLUMNS_TO_EXCLUDE:
             value = series[col]
             value_str = f'{col}: {value}\n'
             sheet_values_str += value_str
@@ -106,7 +109,7 @@ def get_sheet_values_str(data_frame):
 
 def handle_dues_data(workbook):
     if workbook['category'] == DUES_CATEGORY:
-        workbook['category'] = 'FOI National Security'
+        workbook['category'] = DUES_DISPLAY_TITLE
         workbook_data = workbook['data']
         for sheet in workbook_data:
             data = sheet['data']
