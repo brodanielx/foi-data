@@ -1,6 +1,7 @@
 *.json
 *.png
 constants.py
+first_time_guest_constants.py
 lost_founds_called_constants.py
 soldiering_constants.py
 srk_report_constants.py

@@ -27,47 +27,50 @@ from data_utils import (
     get_sheet_data
 )
 
-from lost_founds_called_constants import (
-    LOST_FOUNDS_CALLED_CATEGORY,
-    LOST_FOUNDS_CALLED_WORKBOOK_NAME_DICTIONARIES
+from first_time_guest_constants import (
+    FIRST_TIME_GUESTS_CATEGORY,
+    FIRST_TIME_GUESTS_WORKBOOK_NAME_DICTIONARIES
 )
 
 from spreadsheet import (
     get_google_workbooks
 )
 
-def get_data_and_plot():
-    workbooks = get_google_workbooks(LOST_FOUNDS_CALLED_WORKBOOK_NAME_DICTIONARIES)
 
-    lost_founds_called_total_sheet_data_frame = get_data_frame_by_category_and_sheet_title(
+
+def get_data_and_plot():
+    workbooks = get_google_workbooks(FIRST_TIME_GUESTS_WORKBOOK_NAME_DICTIONARIES)
+
+    first_time_guests_total_sheet_data_frame = get_data_frame_by_category_and_sheet_title(
         workbooks, 
-        LOST_FOUNDS_CALLED_CATEGORY,
+        FIRST_TIME_GUESTS_CATEGORY,
         TOTAL_SHEET_TITLE
     )
 
-    dates = get_index(lost_founds_called_total_sheet_data_frame)
+    dates = get_index(first_time_guests_total_sheet_data_frame)
 
-    lost_founds_called_total_column = get_series_by_column_title(
-        lost_founds_called_total_sheet_data_frame,
+    first_time_guests_total_column = get_series_by_column_title(
+        first_time_guests_total_sheet_data_frame,
         TOTAL_COLUMN_TITLE
     )
 
-    plot_lost_founds_called_line(
+    plot_first_time_guests_line(
         dates,
-        lost_founds_called_total_column
+        first_time_guests_total_column
     )
 
 
 
-def plot_lost_founds_called_line(x, y):
+def plot_first_time_guests_line(x, y):
     style.use('ggplot')
 
     fig = plt.figure(figsize=(15,8))
     ax = fig.add_subplot(111)
     ax.plot(
         x, y, 
-        label='Lost Founds Called', 
-        marker='o'
+        label=f'{FIRST_TIME_GUESTS_CATEGORY}', 
+        marker='o',
+        color='teal'
     )
 
     ax.xaxis.set_major_locator(ticker.IndexLocator(7,0))
@@ -75,9 +78,9 @@ def plot_lost_founds_called_line(x, y):
 
     ax.set_ylim(bottom=0)
 
-    plt.title(f'{LOST_FOUNDS_CALLED_CATEGORY}')
+    plt.title(f'{FIRST_TIME_GUESTS_CATEGORY}')
     plt.xlabel('Week')
-    plt.ylabel(f'Lost Founds Called')
+    plt.ylabel(f'{FIRST_TIME_GUESTS_CATEGORY}')
 
     # file_name = f'{column}_{workbook_category}_line.png'
     # full_path = get_file_path(workbook_category, file_name)
