@@ -84,7 +84,7 @@ def plot_fcn_line(x, y, goal):
         x, goal, 
         label=f'{GOAL_LABEL}', 
         linestyle='--',
-        color='black'
+        color='goldenrod'
     )
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))

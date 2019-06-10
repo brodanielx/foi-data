@@ -1,6 +1,7 @@
 *.json
 *.png
 constants.py
+dues_constants.py
 fcn_constants.py
 first_time_guest_constants.py
 foi_class_attendance_constants.py
