@@ -1,7 +1,9 @@
 *.json
 *.png
 constants.py
+fcn_constants.py
 first_time_guest_constants.py
+foi_class_attendance_constants.py
 lost_founds_called_constants.py
 soldiering_constants.py
 srk_report_constants.py

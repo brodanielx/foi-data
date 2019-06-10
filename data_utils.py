@@ -29,3 +29,9 @@ def get_sheet_by_title(workbook_data, sheet_title):
 
 def get_sheet_data(sheet):
     return sheet['data']
+
+def add_goal_column(data_frame, goal_value):
+    data_frame['Goal'] = goal_value
+
+def get_goal_column(data_frame):
+    return data_frame.Goal
