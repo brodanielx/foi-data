@@ -96,49 +96,55 @@ def plot_fcn_line(
     style.use('ggplot')
 
     fig = plt.figure(figsize=(15,8))
-    ax = fig.add_subplot(111)
-    ax.plot(
+    ax1 = fig.add_subplot(221)
+    ax1.plot(
         dates, total, 
         label=f'{TOTAL_COLUMN_TITLE}', 
         marker='.',
         color='black'
     )
 
-    ax.plot(
+    ax2 = fig.add_subplot(222)
+    ax2.plot(
         dates, national, 
         label=f'{NATIONAL_COLUMN_TITLE}', 
         marker='.',
         color='red'
     )
 
-    ax.plot(
+    ax2.plot(
         dates, national_security_goal, 
         label=f'{NATIONAL_SECURITY_GOAL_LABEL}', 
         linestyle='--',
         color='red'
     )
 
-    ax.plot(
-        dates, regional, 
-        label=f'{REGIONAL_COLUMN_TITLE}', 
-        marker='.',
-        color='yellow'
-    )
+    # ax.plot(
+    #     dates, regional, 
+    #     label=f'{REGIONAL_COLUMN_TITLE}', 
+    #     marker='.',
+    #     color='yellow'
+    # )
 
-    ax.plot(
+    ax3 = fig.add_subplot(223)
+    ax3.plot(
         dates, local, 
         label=f'{LOCAL_COLUMN_TITLE}', 
         marker='.',
         color='green'
     )
 
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))
+    ax1.title.set_text(f'{DUES_CATEGORY}')
+    # ax1.xlabel.set_text('Week')
+    # ax1.ylabel.set_text(f'{DUES_CATEGORY}')
 
-    ax.set_ylim(bottom=0)
+    # ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))
 
-    plt.title(f'{DUES_CATEGORY}')
-    plt.xlabel('Week')
-    plt.ylabel(f'{DUES_CATEGORY}')
+    # ax.set_ylim(bottom=0)
+
+    # plt.title(f'{DUES_CATEGORY}')
+    # plt.xlabel('Week')
+    # plt.ylabel(f'{DUES_CATEGORY}')
 
     # file_name = f'{column}_{workbook_category}_line.png'
     # full_path = get_file_path(workbook_category, file_name)
