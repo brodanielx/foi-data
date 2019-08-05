@@ -33,7 +33,8 @@ from data_utils import (
 from fcn_constants import (
     FCN_CATEGORY,
     FCN_GOAL,
-    FCN_WORKBOOK_NAME_DICTIONARIES
+    FCN_WORKBOOK_NAME_DICTIONARIES,
+    X_LABEL
 )
 
 from spreadsheet import (
@@ -92,7 +93,7 @@ def plot_fcn_line(x, y, goal):
     ax.set_ylim(bottom=0)
 
     plt.title(f'{FCN_CATEGORY}')
-    plt.xlabel('Week')
+    plt.xlabel(X_LABEL)
     plt.ylabel(f'{FCN_CATEGORY}')
 
     # file_name = f'{column}_{workbook_category}_line.png'
