@@ -28,10 +28,10 @@ def get_sheet_by_title(workbook_data, sheet_title):
     return [sheet for sheet in workbook_data if sheet['sheet_title'] == sheet_title][0]
 
 def get_sheet_data(sheet):
-    return sheet['data']
+    return sheet['data'].iloc[-20:]
 
 def add_goal_column(data_frame, goal_value):
-    data_frame['Goal'] = goal_value
+    data_frame.loc[:,'Goal'] = goal_value
 
 def get_goal_column(data_frame):
     return data_frame.Goal

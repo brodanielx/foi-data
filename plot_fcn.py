@@ -88,7 +88,7 @@ def plot_fcn_line(x, y, goal):
         color='goldenrod'
     )
 
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%-m/%-d/%y'))
 
     ax.set_ylim(bottom=0)
 

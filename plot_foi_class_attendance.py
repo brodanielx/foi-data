@@ -38,7 +38,7 @@ from spreadsheet import (
 
 
 
-def get_data_and_plot():
+def get_data_and_plot(weeks):
     workbooks = get_google_workbooks(FOI_CLASS_ATTENDANCE_WORKBOOK_NAME_DICTIONARIES)
 
     foi_class_attendance_total_sheet_data_frame = get_data_frame_by_category_and_sheet_title(
@@ -92,4 +92,4 @@ def plot_foi_class_attendance_line(x, y):
 
 
 if __name__ == '__main__':
-    get_data_and_plot()
+    get_data_and_plot(20)
