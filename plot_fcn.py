@@ -8,9 +8,11 @@ if sys_pf == 'darwin':
     import matplotlib
     matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 import matplotlib.style as style
 import matplotlib.ticker as ticker
+
+from matplotlib.dates import SUNDAY
+from matplotlib.dates import DateFormatter, WeekdayLocator
 
 from constants import (
     GOAL_LABEL,
@@ -24,10 +26,7 @@ from data_utils import (
     get_goal_column,
     get_index,
     get_series_by_column_title,
-    filter_workbook_dictionary_by_category,
-    get_workbook_data,
-    get_sheet_by_title,
-    get_sheet_data
+    slice_data_frames_by_tail
 )
 
 from fcn_constants import (
@@ -43,7 +42,7 @@ from spreadsheet import (
 
 
 
-def get_data_and_plot():
+def get_data_and_plot(head_row_count=0, tail_row_count=0):
     workbooks = get_google_workbooks(FCN_WORKBOOK_NAME_DICTIONARIES)
 
     fcn_total_sheet_data_frame = get_data_frame_by_category_and_sheet_title(
@@ -54,6 +53,11 @@ def get_data_and_plot():
 
     add_goal_column(fcn_total_sheet_data_frame, FCN_GOAL)
     goal = get_goal_column(fcn_total_sheet_data_frame)
+
+    if tail_row_count:
+        fcn_total_sheet_data_frame, goal = slice_data_frames_by_tail(
+                                            fcn_total_sheet_data_frame, goal, 
+                                            tail_row_count)
 
     dates = get_index(fcn_total_sheet_data_frame)
 
@@ -70,6 +74,7 @@ def get_data_and_plot():
 
 
 def plot_fcn_line(x, y, goal):
+    color = 'goldenrod'
     style.use('ggplot')
 
     fig = plt.figure(figsize=(15,8))
@@ -78,17 +83,20 @@ def plot_fcn_line(x, y, goal):
         x, y, 
         label=f'{FCN_CATEGORY}', 
         marker='.',
-        color='goldenrod'
+        color=color
     )
 
     ax.plot(
         x, goal, 
         label=f'{GOAL_LABEL}', 
         linestyle='--',
-        color='goldenrod'
+        color=color
     )
 
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%-m/%-d/%y'))
+    sundays = WeekdayLocator(SUNDAY, interval=4)
+    weeks_format  = DateFormatter('%-m/%-d/%y')
+    ax.xaxis.set_major_locator(sundays)
+    ax.xaxis.set_major_formatter(weeks_format)
 
     ax.set_ylim(bottom=0)
 

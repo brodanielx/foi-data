@@ -28,10 +28,21 @@ def get_sheet_by_title(workbook_data, sheet_title):
     return [sheet for sheet in workbook_data if sheet['sheet_title'] == sheet_title][0]
 
 def get_sheet_data(sheet):
-    return sheet['data'].iloc[-20:]
+    return sheet['data']
 
 def add_goal_column(data_frame, goal_value):
-    data_frame.loc[:,'Goal'] = goal_value
+    data_frame['Goal'] = goal_value
 
 def get_goal_column(data_frame):
     return data_frame.Goal
+
+def slice_data_frame_by_tail(data_frame, row_count):
+    row_count *= -1
+    data_frame = data_frame.iloc[row_count:]
+    return data_frame
+
+def slice_data_frames_by_tail(data_frame1, data_frame2, row_count):
+    row_count *= -1
+    data_frame1 = data_frame1.iloc[row_count:]
+    data_frame2 = data_frame2.iloc[row_count:]
+    return data_frame1, data_frame2
