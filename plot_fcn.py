@@ -115,4 +115,4 @@ def plot_fcn_line(x, y, goal):
 
 
 if __name__ == '__main__':
-    get_data_and_plot()
+    get_data_and_plot(tail_row_count=20)

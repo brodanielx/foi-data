@@ -1,13 +1,25 @@
+from constants import (
+    TOTAL_SHEET_TITLE
+)
 
+def get_non_total_sheets_by_category(workbooks, category):
+    workbook_data = get_workbook_data_by_category(workbooks, category)
+
+    sheets = get_sheets_by_sheet_title_not_equal_to_title(workbook_data, TOTAL_SHEET_TITLE)
+
+    return sheets
 
 def get_data_frame_by_category_and_sheet_title(workbooks, category, sheet_title):
-    workbook = filter_workbook_dictionary_by_category(workbooks, category)
-
-    workbook_data = get_workbook_data(workbook)
+    workbook_data = get_workbook_data_by_category(workbooks, category)
 
     sheet = get_sheet_by_title(workbook_data, sheet_title)
 
     return get_sheet_data(sheet)
+
+def get_workbook_data_by_category(workbooks, category):
+    workbook = filter_workbook_dictionary_by_category(workbooks, category)
+
+    return get_workbook_data(workbook)
 
 
 def get_index(data_frame):
@@ -26,6 +38,9 @@ def get_workbook_data(workbook):
 
 def get_sheet_by_title(workbook_data, sheet_title):
     return [sheet for sheet in workbook_data if sheet['sheet_title'] == sheet_title][0]
+
+def get_sheets_by_sheet_title_not_equal_to_title(workbook_data, title):
+    return [sheet for sheet in workbook_data if sheet['sheet_title'] not in [title, 'StPete']]
 
 def get_sheet_data(sheet):
     return sheet['data']
