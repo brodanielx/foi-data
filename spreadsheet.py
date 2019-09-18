@@ -23,6 +23,15 @@ from constants import (
     WORKBOOK_NAME_DICTIONARIES
 )
 
+from data_utils import (
+    concat_list_of_data_frames_horizontally,
+    drop_columns,
+    get_str_date_of_last_row,
+    get_list_of_data_frames_from_sheets,
+    get_list_of_nth_row,
+    get_non_total_sheets_by_category
+)
+
 def get_google_workbooks(workbook_name_dictionaries):
     workbooks = []
     for workbook_name_dict in  workbook_name_dictionaries:
@@ -83,3 +92,15 @@ def clean_data(data):
     data = data.replace(r'', 0)
     data.index = pd.to_datetime(data.index)
     return data
+
+def get_concatenated_data_frame_of_non_total_sheets_by_category(
+    workbook_name_dictionaries,
+    category,
+    columns_to_drop
+):
+    workbooks = get_google_workbooks(workbook_name_dictionaries)
+    sheets = get_non_total_sheets_by_category(workbooks, category)
+
+    data_frames = get_list_of_data_frames_from_sheets(sheets)
+    data_frame = concat_list_of_data_frames_horizontally(data_frames)
+    return drop_columns(data_frame, columns_to_drop)
