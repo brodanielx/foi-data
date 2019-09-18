@@ -1,3 +1,5 @@
+import pandas as pd
+
 from constants import (
     TOTAL_SHEET_TITLE
 )
@@ -61,3 +63,23 @@ def slice_data_frames_by_tail(data_frame1, data_frame2, row_count):
     data_frame1 = data_frame1.iloc[row_count:]
     data_frame2 = data_frame2.iloc[row_count:]
     return data_frame1, data_frame2
+
+def get_list_of_data_frames_from_sheets(sheets):
+    return [sheet['data'] for sheet in sheets]
+
+def concat_list_of_data_frames_horizontally(data_frames):
+    return pd.concat(data_frames, axis=1)
+
+def drop_columns(data_frame, column_names_list):
+    return data_frame.drop(column_names_list, axis=1)
+
+def get_list_of_nth_row(data_frame, row_index):
+    return list(data_frame.iloc[row_index, :])
+
+def get_date_of_last_row(data_frame):
+    row = data_frame.tail(1)
+    return row.index
+
+def get_str_date_of_last_row(data_frame):
+    date_time_index = get_date_of_last_row(data_frame)
+    return date_time_index.strftime('%m/%d/%Y')[0]

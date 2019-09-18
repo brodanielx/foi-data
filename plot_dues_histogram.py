@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
@@ -10,10 +11,6 @@ if sys_pf == 'darwin':
 import matplotlib.pyplot as plt
 import matplotlib.style as style
 
-from constants import (
-    COLUMNS_TO_DROP_FOR_HISTOGRAM
-)
-
 from data_utils import (
     concat_list_of_data_frames_horizontally,
     drop_columns,
@@ -23,9 +20,10 @@ from data_utils import (
     get_non_total_sheets_by_category
 )
 
-from fcn_constants import (
-    FCN_CATEGORY,
-    FCN_WORKBOOK_NAME_DICTIONARIES
+from dues_constants import (
+    COLUMNS_TO_DROP_FOR_HISTOGRAM,
+    DUES_CATEGORY,
+    DUES_WORKBOOK_NAME_DICTIONARIES
 )
 
 from spreadsheet import (
@@ -39,8 +37,8 @@ def get_data_and_plot():
     
 
 def get_data_and_date():
-    workbooks = get_google_workbooks(FCN_WORKBOOK_NAME_DICTIONARIES)
-    sheets = get_non_total_sheets_by_category(workbooks, FCN_CATEGORY)
+    workbooks = get_google_workbooks(DUES_WORKBOOK_NAME_DICTIONARIES)
+    sheets = get_non_total_sheets_by_category(workbooks, DUES_CATEGORY)
 
     data_frames = get_list_of_data_frames_from_sheets(sheets)
     data_frame = concat_list_of_data_frames_horizontally(data_frames)
@@ -52,6 +50,7 @@ def get_data_and_date():
 
 
 def plot(data, date):
+    color = 'green'
     style.use('ggplot')
 
     fig = plt.figure(figsize=(15,8))
@@ -59,13 +58,16 @@ def plot(data, date):
     counts, bins, patches = ax.hist(
         data,
         bins=10,
-        rwidth=.9
+        rwidth=.9,
+        color=color
     )
 
+    max_count = max(counts)
     ax.set_xticks(bins)
+    ax.set_yticks(np.arange(0, max_count+1, 4))
 
-    plt.title(f'FCN Distribution {date}')
-    plt.xlabel(f'FCN')
+    plt.title(f'FOI Dues Distribution {date}')
+    plt.xlabel(f'$')
     plt.ylabel(f'FOI Count')
 
     plt.show()
