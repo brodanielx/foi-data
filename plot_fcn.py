@@ -36,6 +36,10 @@ from fcn_constants import (
     X_LABEL
 )
 
+from graph import (
+    get_file_path
+)
+
 from spreadsheet import (
     get_google_workbooks
 )
@@ -104,13 +108,14 @@ def plot_fcn_line(x, y, goal):
     plt.xlabel(X_LABEL)
     plt.ylabel(f'{FCN_CATEGORY}')
 
-    # file_name = f'{column}_{workbook_category}_line.png'
-    # full_path = get_file_path(workbook_category, file_name)
-
-    # plt.savefig(full_path, bbox_inches='tight')
-    # plt.close(fig)
     plt.legend()
-    plt.show()
+
+    file_name = f'{FCN_CATEGORY}_line.png'
+    full_path = get_file_path(FCN_CATEGORY, file_name)
+
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close(fig)
+    
 
 
 

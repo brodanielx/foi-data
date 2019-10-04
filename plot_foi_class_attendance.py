@@ -35,6 +35,10 @@ from foi_class_attendance_constants import (
     FOI_CLASS_ATTENDANCE_WORKBOOK_NAME_DICTIONARIES
 )
 
+from graph import (
+    get_file_path
+)
+
 from spreadsheet import (
     get_google_workbooks
 )
@@ -95,7 +99,6 @@ def plot_foi_class_attendance_line(x, y, goal):
         color=color
     )
 
-    # ax.xaxis.set_major_formatter(mdates.DateFormatter('%b \'%y'))
     mondays = WeekdayLocator(MONDAY, interval=4)
     weeks_format  = DateFormatter('%-m/%-d/%y')
     ax.xaxis.set_major_locator(mondays)
@@ -107,13 +110,13 @@ def plot_foi_class_attendance_line(x, y, goal):
     plt.xlabel('Date')
     plt.ylabel(f'FOI')
 
-    # file_name = f'{column}_{workbook_category}_line.png'
-    # full_path = get_file_path(workbook_category, file_name)
+    file_name = f'{FOI_CLASS_ATTENDANCE_CATEGORY}_line.png'
+    full_path = get_file_path(FOI_CLASS_ATTENDANCE_CATEGORY, file_name)
 
-    # plt.savefig(full_path, bbox_inches='tight')
-    # plt.close(fig)
-    plt.legend()
-    plt.show()
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close(fig)
+    # plt.legend()
+    # plt.show()
 
 
 

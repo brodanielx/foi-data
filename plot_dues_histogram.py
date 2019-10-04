@@ -22,6 +22,10 @@ from dues_constants import (
     DUES_WORKBOOK_NAME_DICTIONARIES
 )
 
+from graph import (
+    get_file_path
+)
+
 from spreadsheet import (
     get_concatenated_data_frame_of_non_total_sheets_by_category
 )
@@ -61,11 +65,17 @@ def plot(data, date):
     ax.set_xticks(bins)
     ax.set_yticks(np.arange(0, max_count+1, 4))
 
-    plt.title(f'FOI Dues Distribution {date}')
-    plt.xlabel(f'Dues ($)')
+    plt.title(f'{DUES_CATEGORY} Distribution {date}')
+    plt.xlabel(f'{DUES_CATEGORY} ($)')
     plt.ylabel(f'FOI Count')
 
-    plt.show()
+    file_name = f'{DUES_CATEGORY}_histogram.png'
+    full_path = get_file_path(DUES_CATEGORY, file_name)
+
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close(fig)
+
+    # plt.show()
 
 
 
