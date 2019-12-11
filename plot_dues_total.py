@@ -106,6 +106,8 @@ def plot_dues_line(x, y, goal):
     plt.xlabel('Date')
     plt.ylabel(f'$')
 
+    plt.legend()
+
     file_name = f'{DUES_CATEGORY}_line.png'
     full_path = get_file_path(DUES_CATEGORY, file_name)
 
