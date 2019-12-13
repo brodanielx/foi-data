@@ -87,13 +87,19 @@ def get_workbook_values_str(workbooks, category):
 
     for sheet in workbook_data:
         sheet_title = sheet['sheet_title']
+        
         if sheet_title not in SHEET_TITLES_TO_EXCLUDE:
             data = sheet['data']
             data_tail = data.tail(1)
             sheet_values_str = get_sheet_values_str(data_tail)
             values_str += sheet_values_str
+        elif sheet_title == 'Total':
+            data = sheet['data']
+            most_recent_week = data.tail(1).iloc[0]
+            total = most_recent_week['Total']
+            total_str = f'Total: {total}\n'
 
-    return values_str
+    return values_str + total_str
 
 def get_sheet_values_str(data_frame):
     sheet_values_str = ''
