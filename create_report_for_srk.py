@@ -16,8 +16,8 @@ from srk_report_constants import (
     FOI_AUTOMATE_EMAIL_ADDRESS, 
     FOI_AUTOMATE_EMAIL_PASSWORD,
     FOI_EMAIL_ADDRESS,
-    FOOTER_MESSAGE, GREETINGS, 
-    RECIPIENT_EMAIL_ADDRESSES,
+    FOOTER_MESSAGE, GREETINGS, GREETINGS_STPETE,
+    RECIPIENT_EMAIL_ADDRESSES, RECIPIENT_EMAIL_ADDRESSES_STPETE,
     SHEET_TITLES_TO_EXCLUDE,
     SUBJECT,
     SMTP_PORT, SMTP_SERVER
@@ -28,32 +28,36 @@ from spreadsheet import (
 )
 
 def create_and_send_report():
-    full_email_str = create_report()
-    send_report(full_email_str)
+    full_email_str, full_email_str_stpete = create_report()
+    send_report(full_email_str, full_email_str_stpete)
 
 
 def create_report():
     workbooks = get_google_workbooks(WORKBOOK_NAME_DICTIONARIES)
-    dues_str = get_workbook_values_str(workbooks, DUES_CATEGORY)
-    fcn_str = get_workbook_values_str(workbooks, FCN_CATEGORY)
-    foi_class_attendance_str = get_workbook_values_str(
+    dues_str, dues_str_stpete = get_workbook_values_str(workbooks, DUES_CATEGORY)
+    fcn_str, fcn_str_stpete = get_workbook_values_str(workbooks, FCN_CATEGORY)
+    foi_class_attendance_str, foi_class_attendance_str_stpete = get_workbook_values_str(
         workbooks, FOI_CLASS_ATTENDANCE_CATEGORY
     )
 
     date_str = get_report_date(workbooks)
 
     values_str = f'{dues_str}\n{fcn_str}\n{foi_class_attendance_str}\n'
+    values_str_stpete = f'{dues_str_stpete}\n{fcn_str_stpete}\n{foi_class_attendance_str_stpete}\n'
 
     email_body_str = f'{GREETINGS}{date_str}.\n\n{values_str}\n{FOOTER_MESSAGE}'
+    email_body_str_stpete = f'{GREETINGS_STPETE}{date_str}.\n\n{values_str_stpete}\n{FOOTER_MESSAGE}'
 
     full_email_str = f'Subject: {SUBJECT} {date_str}\n\n{email_body_str}'
+    full_email_str_stpete = f'Subject: {SUBJECT} {date_str}\n\n{email_body_str_stpete}'
 
-    return full_email_str
+    return full_email_str, full_email_str_stpete
 
 
-def send_report(full_email_str):
+def send_report(full_email_str, full_email_str_stpete):
     conn = get_smtp_connection()
     conn.sendmail(FOI_AUTOMATE_EMAIL_ADDRESS, RECIPIENT_EMAIL_ADDRESSES, full_email_str)
+    conn.sendmail(FOI_AUTOMATE_EMAIL_ADDRESS, RECIPIENT_EMAIL_ADDRESSES_STPETE, full_email_str_stpete)
 
 
 def get_smtp_connection():
@@ -84,22 +88,34 @@ def get_workbook_values_str(workbooks, category):
     category = workbook['category']
 
     values_str = f'{category}\n'
+    values_str_stpete = f'{category}\n'
 
     for sheet in workbook_data:
         sheet_title = sheet['sheet_title']
         
-        if sheet_title not in SHEET_TITLES_TO_EXCLUDE:
+        if sheet_title != 'Total':
             data = sheet['data']
             data_tail = data.tail(1)
             sheet_values_str = get_sheet_values_str(data_tail)
-            values_str += sheet_values_str
+
+            if sheet_title == 'StPete':
+                values_str_stpete += sheet_values_str
+            else:
+                values_str += sheet_values_str
         elif sheet_title == 'Total':
             data = sheet['data']
             most_recent_week = data.tail(1).iloc[0]
-            total = most_recent_week['Total']
-            total_str = f'Total: {total}\n'
 
-    return values_str + total_str
+            total = most_recent_week['Total']
+            total_stpete = most_recent_week['StPete']
+
+            total_str = f'Total: {total}\n'
+            total_stpete_str = f'Total: {total_stpete}\n'
+
+    values_str += total_str
+    values_str_stpete += total_stpete_str
+
+    return values_str, values_str_stpete
 
 def get_sheet_values_str(data_frame):
     sheet_values_str = ''
