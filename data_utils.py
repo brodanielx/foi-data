@@ -1,6 +1,6 @@
 import pandas as pd
 
-from constants import (
+from constants.constants import (
     TOTAL_SHEET_TITLE
 )
 

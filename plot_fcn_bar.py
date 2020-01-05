@@ -10,7 +10,7 @@ if sys_pf == 'darwin':
 import matplotlib.pyplot as plt
 import matplotlib.style as style
 
-from constants import (
+from constants.constants import (
     COLUMNS_TO_DROP_FOR_HISTOGRAM
 )
 

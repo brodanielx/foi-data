@@ -1,5 +1,6 @@
 *.json
 *.png
+*.pdf
 constants.py
 dues_constants.py
 fcn_constants.py
@@ -9,6 +10,7 @@ lost_founds_called_constants.py
 soldiering_constants.py
 srk_report_constants.py
 
+constants/
 graphs/
 
 

@@ -15,8 +15,8 @@ if sys_pf == 'darwin':
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-from constants import (
-    CLIENT_SECRET_FILENAME, FCN_WORKBOOK_NAME,
+from constants.constants import (
+    CLIENT_SECRET_FILEPATH, FCN_WORKBOOK_NAME,
     FOI_CLASS_ATTENDANCE_WORKBOOK_NAME, 
     NUMBER_OF_SHEETS_PER_WORKBOOK,
     NUMBER_OF_SQUADS, SCOPE,
@@ -72,7 +72,7 @@ def get_google_workbook(workbook_name):
 
 def get_gspread_client():
     credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        CLIENT_SECRET_FILENAME, SCOPE
+        CLIENT_SECRET_FILEPATH, SCOPE
     )
 
     return gspread.authorize(credentials)
