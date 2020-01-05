@@ -2,7 +2,7 @@ import pandas as pd
 from pprint import pprint
 import smtplib
 
-from constants import (
+from constants.constants import (
     DATE_FORMAT,
     DUES_CATEGORY,
     DUES_DISPLAY_TITLE,

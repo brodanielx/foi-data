@@ -16,9 +16,7 @@ twelve_spaces = ' '*12
 twenty_spaces = ' '*20
 
 
-def create_sign_out_pdf():
-
-    df, date = fcn.get_data_and_date()
+def create_sign_out_pdf(df, date):
 
     data_series = clean_data(df)
 
@@ -106,4 +104,5 @@ def draw_ruler(pdf):
 
 
 if __name__ == '__main__':
-    create_sign_out_pdf()
+    # create_sign_out_pdf()
+    pass
