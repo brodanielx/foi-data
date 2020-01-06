@@ -32,6 +32,17 @@ from spreadsheet import (
     get_concatenated_data_frame_of_non_total_sheets_by_category
 )
 
+columns_to_drop = [
+    '12186 - Chad Muhammad',
+    '138078 - Jacobi X',
+    '1581 - Theodore Muhammad',
+    '203944 - Malik X',
+    '211835 - Jordan X',
+    '212428 - McKinley X',
+    '29220 - Alton Muhammad',
+    '32126 - Shakir Muhammad'
+]
+
 def get_data_and_plot():
     data, date = get_data_and_date()
     plot(data, date)
@@ -48,8 +59,12 @@ def get_data_and_date():
     date = get_str_date_of_last_row(data_frame)
 
     data = data_frame.tail(1)
+    data.drop(columns=columns_to_drop, inplace=True)
+    # print(columns_to_drop)
 
-    return data, date
+    ds = data.squeeze()
+
+    return ds, date
 
 
 def plot(data, date):
@@ -72,5 +87,7 @@ def plot(data, date):
 
 
 if __name__ == '__main__':
-    get_data_and_plot()
+    # get_data_and_plot()
+    ds, _ = get_data_and_date()
+    print(ds)
 
