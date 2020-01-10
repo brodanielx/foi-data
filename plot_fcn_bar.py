@@ -44,8 +44,8 @@ columns_to_drop = [
 ]
 
 def get_data_and_plot():
-    data, date = get_data_and_date()
-    plot(data, date)
+    foi, fcn, date = get_data_and_date()
+    plot(foi, fcn, date)
 
     
 
@@ -64,10 +64,13 @@ def get_data_and_date():
 
     ds = data.squeeze()
 
-    return ds, date
+    foi = list(ds.keys())
+    fcn = ds.to_list()
+
+    return foi, fcn, date
 
 
-def plot(data, date):
+def plot(x_vals, y_vals, date):
     style.use('ggplot')
 
     # fig = plt.figure(figsize=(15,8))
@@ -88,6 +91,8 @@ def plot(data, date):
 
 if __name__ == '__main__':
     # get_data_and_plot()
-    ds, _ = get_data_and_date()
-    print(ds)
+    foi, fcn, date  = get_data_and_date()
+    print(foi)
+    print(fcn)
+    print(date)
 
