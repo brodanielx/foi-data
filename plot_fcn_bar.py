@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
@@ -63,6 +64,7 @@ def get_data_and_date():
     # print(columns_to_drop)
 
     ds = data.squeeze()
+    ds.sort_values(ascending=True, inplace=True)
 
     foi = list(ds.keys())
     fcn = ds.to_list()
@@ -73,26 +75,30 @@ def get_data_and_date():
 def plot(x_vals, y_vals, date):
     style.use('ggplot')
 
+    x_pos = np.arange(len(x_vals))
+
     # fig = plt.figure(figsize=(15,8))
     # ax = fig.add_subplot(111)
-    ax = data.plot(kind='barh', figsize=(15, 8), legend=True, fontsize=12)
+    # ax = data.plot(kind='barh', figsize=(15, 8), legend=True, fontsize=12)
 
-    plt.title(f'{FCN_CATEGORY} {date}')
-    plt.xlabel(f'{FCN_CATEGORY}')
-    plt.ylabel(f'FOI Count')
+    plt.barh(x_pos, y_vals)
+    plt.yticks(x_pos, x_vals)
 
-    file_name = f'{FCN_CATEGORY}_bar.png'
-    full_path = get_file_path(FCN_CATEGORY, file_name)
 
-    plt.savefig(full_path, bbox_inches='tight')
-    plt.close()
+    plt.show()
+
+    # plt.title(f'{FCN_CATEGORY} {date}')
+    # plt.xlabel(f'{FCN_CATEGORY}')
+    # plt.ylabel(f'FOI Count')
+
+    # file_name = f'{FCN_CATEGORY}_bar.png'
+    # full_path = get_file_path(FCN_CATEGORY, file_name)
+
+    # plt.savefig(full_path, bbox_inches='tight')
+    # plt.close()
 
 
 
 if __name__ == '__main__':
-    # get_data_and_plot()
-    foi, fcn, date  = get_data_and_date()
-    print(foi)
-    print(fcn)
-    print(date)
+    get_data_and_plot()
 
