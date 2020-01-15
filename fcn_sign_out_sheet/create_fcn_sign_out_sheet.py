@@ -37,11 +37,12 @@ def create_sign_out_pdf(df, date):
 
 
 def clean_data(df):
-    df.drop(columns='12186 - Chad Muhammad', inplace=True)
+    # df.drop(columns='12186 - Chad Muhammad', inplace=True)
     df.rename(columns = lambda col: col.split('- ')[1], inplace=True)
 
     series = df.squeeze()
     series = series[series > 0]
+    series.sort_values(ascending=False, inplace=True)
     return series
 
 
