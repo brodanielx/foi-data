@@ -14,7 +14,7 @@ import matplotlib.ticker as ticker
 from matplotlib.dates import SUNDAY
 from matplotlib.dates import DateFormatter, WeekdayLocator
 
-from constants import (
+from constants.constants import (
     GOAL_LABEL,
     TOTAL_COLUMN_TITLE,
     TOTAL_SHEET_TITLE
