@@ -8,6 +8,7 @@ from constants.constants import (
     DUES_DISPLAY_TITLE,
     FCN_CATEGORY,
     FOI_CLASS_ATTENDANCE_CATEGORY,
+    INACTIVE,
     WORKBOOK_NAME_DICTIONARIES
 )
 
@@ -120,9 +121,10 @@ def get_workbook_values_str(workbooks, category):
 def get_sheet_values_str(data_frame):
     sheet_values_str = ''
     series = data_frame.iloc[0]
+    series = series[series != 0]
 
-    for col in data_frame.columns:
-        if col not in COLUMNS_TO_EXCLUDE:
+    for col in series.index:
+        if col not in (COLUMNS_TO_EXCLUDE + INACTIVE):
             value = series[col]
             value_str = f'{col}: {value}\n'
             sheet_values_str += value_str
