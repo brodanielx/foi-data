@@ -109,13 +109,13 @@ def plot(x_vals, y_vals, date):
     plt.xlabel(f'{FCN_CATEGORY}')
     plt.ylabel(f'FOI')
 
-    # file_name = f'{FCN_CATEGORY}_bar.png'
-    # full_path = get_file_path(FCN_CATEGORY, file_name)
+    file_name = f'{FCN_CATEGORY}_bar.png'
+    full_path = get_file_path(FCN_CATEGORY, file_name)
 
-    # plt.savefig(full_path, bbox_inches='tight')
-    # plt.close()
+    plt.savefig(full_path, bbox_inches='tight')
+    plt.close()
 
-    plt.show()
+    # plt.show()
 
 
 
