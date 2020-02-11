@@ -92,9 +92,9 @@ def plot(x_vals, y_vals, date):
         color = 'white'
 
         if (val > 99):
-            x = val - 7
+            x = val - 10
         elif (val > 5 and val < 100):
-            x = val - 5
+            x = val - 7
         elif (val < 6):
             x = 5
             color = 'red'
