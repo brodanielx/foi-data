@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.style as style
 
 from constants.constants import (
-    COLUMNS_TO_DROP_FOR_HISTOGRAM
+    COLUMNS_TO_DROP_FOR_HISTOGRAM,
 )
 
 from data_utils import (
@@ -22,7 +22,8 @@ from data_utils import (
 
 from fcn_constants import (
     FCN_CATEGORY,
-    FCN_WORKBOOK_NAME_DICTIONARIES
+    FCN_WORKBOOK_NAME_DICTIONARIES,
+    FCN_COLUMNS_TO_DROP
 )
 
 from graph import (
@@ -32,17 +33,6 @@ from graph import (
 from spreadsheet import (
     get_concatenated_data_frame_of_non_total_sheets_by_category
 )
-
-columns_to_drop = [
-    '12186 - Chad Muhammad',
-    '138078 - Jacobi X',
-    '1581 - Theodore Muhammad',
-    '203944 - Malik X',
-    '211835 - Jordan X',
-    '212428 - McKinley X',
-    '29220 - Alton Muhammad',
-    '32126 - Shakir Muhammad'
-]
 
 def get_data_and_plot():
     df, date = get_data_and_date()
@@ -68,7 +58,7 @@ def get_data_and_date():
     date = get_str_date_of_last_row(data_frame)
 
     data = data_frame.tail(1)
-    data.drop(columns=columns_to_drop, inplace=True)
+    data.drop(columns=FCN_COLUMNS_TO_DROP, inplace=True)
 
     return data, date
 
