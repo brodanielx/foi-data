@@ -36,7 +36,7 @@ from spreadsheet import (
 
 def get_data_and_plot():
     df, date = get_data_and_date()
-    df.rename(columns = lambda col: col.split('- ')[1], inplace=True)
+    df.rename(columns = lambda col: get_column_name_display(col), inplace=True)
 
     ds = df.squeeze()
     ds.sort_values(ascending=True, inplace=True)
@@ -45,6 +45,12 @@ def get_data_and_plot():
     fcn = ds.to_list()
 
     plot(foi, fcn, date)
+
+def get_column_name_display(column_name):
+    if '-' in column_name:
+        return column_name.split('- ')[1]
+    else:
+        return column_name
 
     
 
@@ -74,8 +80,10 @@ def plot(x_vals, y_vals, date):
 
     plt.barh(x_pos, y_vals)
 
-    plt.axvline(x=100, linestyle='--')
+    plt.axvline(x=50)
+    plt.text(50.5, 8,'Minimum', color='red')
 
+    plt.axvline(x=100, linestyle='--')
     plt.text(100.5, 8,'Goal', color='red')
 
     for i, val in enumerate(y_vals):
@@ -95,7 +103,7 @@ def plot(x_vals, y_vals, date):
 
     plt.tight_layout(pad=2.3)
 
-    plt.title(f'Tampa FCN {date}')
+    plt.title(f'Bay Area FCN {date}')
     plt.xlabel(f'{FCN_CATEGORY}')
     plt.ylabel(f'FOI')
 

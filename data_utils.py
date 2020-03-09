@@ -42,7 +42,7 @@ def get_sheet_by_title(workbook_data, sheet_title):
     return [sheet for sheet in workbook_data if sheet['sheet_title'] == sheet_title][0]
 
 def get_sheets_by_sheet_title_not_equal_to_title(workbook_data, title):
-    return [sheet for sheet in workbook_data if sheet['sheet_title'] not in [title, 'StPete']]
+    return [sheet for sheet in workbook_data if sheet['sheet_title'] not in [title]]
 
 def get_sheet_data(sheet):
     return sheet['data']
@@ -83,3 +83,9 @@ def get_date_of_last_row(data_frame):
 def get_str_date_of_last_row(data_frame):
     date_time_index = get_date_of_last_row(data_frame)
     return date_time_index.strftime('%m/%d/%Y')[0]
+
+def get_column_name_display(column_name):
+    if '-' in column_name:
+        return column_name.split('- ')[1]
+    else:
+        return column_name

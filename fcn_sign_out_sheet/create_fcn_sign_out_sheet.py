@@ -9,6 +9,7 @@ sys.path.append(parent_dir)
 from reportlab.pdfgen import canvas
 
 import plot_fcn_bar as fcn
+import data_utils as utils 
 
 signature_underline = '_'*18
 ten_spaces = ' '*10
@@ -38,7 +39,7 @@ def create_sign_out_pdf(df, date):
 
 def clean_data(df):
     # df.drop(columns='12186 - Chad Muhammad', inplace=True)
-    df.rename(columns = lambda col: col.split('- ')[1], inplace=True)
+    df.rename(columns = lambda col: utils.get_column_name_display(col), inplace=True)
 
     series = df.squeeze()
     series = series[series > 0]
