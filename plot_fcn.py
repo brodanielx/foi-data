@@ -17,6 +17,7 @@ from matplotlib.dates import DateFormatter, WeekdayLocator
 from constants.constants import (
     GOAL_LABEL,
     BAY_AREA_COLUMN_TITLE,
+    TOTAL_COLUMN_TITLE,
     TOTAL_SHEET_TITLE
 )
 
@@ -67,7 +68,7 @@ def get_data_and_plot(head_row_count=0, tail_row_count=0):
 
     fcn_total_column = get_series_by_column_title(
         fcn_total_sheet_data_frame,
-        BAY_AREA_COLUMN_TITLE
+        TOTAL_COLUMN_TITLE
     )
 
     plot_fcn_line(
@@ -104,7 +105,7 @@ def plot_fcn_line(x, y, goal):
 
     ax.set_ylim(bottom=0)
 
-    plt.title(f'Bay Area {FCN_CATEGORY}')
+    plt.title(f'Tampa {FCN_CATEGORY}')
     plt.xlabel(X_LABEL)
     plt.ylabel(f'{FCN_CATEGORY}')
 

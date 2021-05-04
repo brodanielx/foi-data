@@ -90,9 +90,9 @@ def plot(x_vals, y_vals, date):
         color = 'white'
 
         if (val > 99):
-            x = val - 10
+            x = val - 15
         elif (val > 5 and val < 100):
-            x = val - 7
+            x = val - 10
         elif (val < 6):
             x = 5
             color = 'red'
@@ -103,7 +103,7 @@ def plot(x_vals, y_vals, date):
 
     plt.tight_layout(pad=2.3)
 
-    plt.title(f'Bay Area FCN {date}')
+    plt.title(f'Tampa FCN {date}')
     plt.xlabel(f'{FCN_CATEGORY}')
     plt.ylabel(f'FOI')
 

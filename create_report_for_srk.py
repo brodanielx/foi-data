@@ -43,8 +43,14 @@ def create_report():
 
     date_str = get_report_date(workbooks)
 
-    values_str = f'{dues_str}\n{fcn_str}\n{foi_class_attendance_str}\n'
-    values_str_stpete = f'{dues_str_stpete}\n{fcn_str_stpete}\n{foi_class_attendance_str_stpete}\n'
+    # values_str = f'{dues_str}\n{fcn_str}\n{foi_class_attendance_str}\n'
+    # values_str_stpete = f'{dues_str_stpete}\n{fcn_str_stpete}\n{foi_class_attendance_str_stpete}\n'
+
+    # values_str = f'{dues_str}\n{foi_class_attendance_str}\n'
+    # values_str_stpete = f'{dues_str_stpete}\n{foi_class_attendance_str_stpete}\n'
+
+    values_str = f'{dues_str}\n'
+    values_str_stpete = f'{dues_str_stpete}\n'
 
     email_body_str = f'{GREETINGS}{date_str}.\n\n{values_str}\n{FOOTER_MESSAGE}'
     email_body_str_stpete = f'{GREETINGS_STPETE}{date_str}.\n\n{values_str_stpete}\n{FOOTER_MESSAGE}'
